@@ -26,6 +26,7 @@ type ScrapedItem struct {
 type ScrapedPerformer struct {
 	Name         *string `graphql:"name" json:"name"`
 	URL          *string `graphql:"url" json:"url"`
+	PhotoUrl     *string `graphql:"photo_url" json:"photo_url"`
 	Twitter      *string `graphql:"twitter" json:"twitter"`
 	Instagram    *string `graphql:"instagram" json:"instagram"`
 	Birthdate    *string `graphql:"birthdate" json:"birthdate"`
@@ -57,6 +58,7 @@ type ScrapedScenePerformer struct {
 	ID           *string `graphql:"id" json:"id"`
 	Name         string  `graphql:"name" json:"name"`
 	URL          *string `graphql:"url" json:"url"`
+	PhotoUrl     *string `graphql:"photo_url" json:"photo_url"`
 	Twitter      *string `graphql:"twitter" json:"twitter"`
 	Instagram    *string `graphql:"instagram" json:"instagram"`
 	Birthdate    *string `graphql:"birthdate" json:"birthdate"`

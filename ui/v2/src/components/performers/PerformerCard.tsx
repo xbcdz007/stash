@@ -35,7 +35,7 @@ export const PerformerCard: FunctionComponent<IPerformerCardProps> = (props: IPe
       <Link
         to={`/performers/${props.performer.id}`}
         className="performer previewable image"
-        style={{backgroundImage: `url(${props.performer.image_path})`}}
+        style={{backgroundImage: `url(${props.performer.photo_url ? props.performer.photo_url: props.performer.image_path})`}}
       >
         {maybeRenderFavoriteBanner()}
       </Link>

@@ -29,7 +29,7 @@ export const PerformerListTable: FunctionComponent<IPerformerListTableProps> = (
 
   function renderPerformerImage(performer : GQL.PerformerDataFragment) {
     const style: React.CSSProperties = {
-      backgroundImage: `url('${performer.image_path}')`,
+      backgroundImage: `url('${performer.photo_url ? performer.photo_url: performer.image_path}')`,
       lineHeight: 5,
       backgroundSize: "contain",
       display: "inline-block",
@@ -104,4 +104,3 @@ export const PerformerListTable: FunctionComponent<IPerformerListTableProps> = (
     </>
   );
 };
-  

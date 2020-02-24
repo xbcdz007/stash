@@ -43,7 +43,7 @@ export const Performer: FunctionComponent<IPerformerProps> = (props: IPerformerP
   }, [data]);
 
   useEffect(() => {
-    setImagePreview(performer.image_path);
+    setImagePreview(performer.photo_url ? performer.photo_url : performer.image_path);
   }, [performer]);
 
   function onImageChange(image: string) {

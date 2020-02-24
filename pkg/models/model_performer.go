@@ -10,6 +10,7 @@ type Performer struct {
 	Checksum     string          `db:"checksum" json:"checksum"`
 	Name         sql.NullString  `db:"name" json:"name"`
 	URL          sql.NullString  `db:"url" json:"url"`
+	PhotoUrl     sql.NullString  `db:"photo_url" json:"photo_url"`
 	Twitter      sql.NullString  `db:"twitter" json:"twitter"`
 	Instagram    sql.NullString  `db:"instagram" json:"instagram"`
 	Birthdate    SQLiteDate      `db:"birthdate" json:"birthdate"`

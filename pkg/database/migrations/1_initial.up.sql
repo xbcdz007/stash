@@ -89,6 +89,7 @@ CREATE TABLE `performers` (
   `checksum` varchar(255) not null,
   `name` varchar(255),
   `url` varchar(255),
+  `photo_url` varchar(255),
   `twitter` varchar(255),
   `instagram` varchar(255),
   `birthdate` date,

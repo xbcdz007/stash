@@ -55,6 +55,7 @@ export const PerformerDetailsPanel: FunctionComponent<IPerformerDetailsProps> = 
   const [tattoos, setTattoos] = useState<string | undefined>(undefined);
   const [piercings, setPiercings] = useState<string | undefined>(undefined);
   const [url, setUrl] = useState<string | undefined>(undefined);
+  const [photo_url, setPhotoUrl] = useState<string | undefined>(undefined);
   const [twitter, setTwitter] = useState<string | undefined>(undefined);
   const [instagram, setInstagram] = useState<string | undefined>(undefined);
 
@@ -81,6 +82,7 @@ export const PerformerDetailsPanel: FunctionComponent<IPerformerDetailsProps> = 
     setTattoos(state.tattoos);
     setPiercings(state.piercings);
     setUrl(state.url);
+    setPhotoUrl(state.photo_url);
     setTwitter(state.twitter);
     setInstagram(state.instagram);
   }
@@ -134,6 +136,7 @@ export const PerformerDetailsPanel: FunctionComponent<IPerformerDetailsProps> = 
       tattoos,
       piercings,
       url,
+      photo_url,
       twitter,
       instagram,
       image,
@@ -147,6 +150,8 @@ export const PerformerDetailsPanel: FunctionComponent<IPerformerDetailsProps> = 
 
   function onSave() {
     if (props.onSave) {
+      let input = getPerformerInput();
+      // input.photo_url
       props.onSave(getPerformerInput());
     }
   }
@@ -215,7 +220,7 @@ export const PerformerDetailsPanel: FunctionComponent<IPerformerDetailsProps> = 
       value: ethnicity,
       isEditing: !!props.isEditing,
       onChange: (value: string) => setEthnicity(value),
-      selectOptions: ["white", "black", "asian", "hispanic"],
+      selectOptions: ["white", "black", "asian", "hispanic", "other"],
     });
   }
 
@@ -314,6 +319,23 @@ export const PerformerDetailsPanel: FunctionComponent<IPerformerDetailsProps> = 
     )
   }
 
+  function renderImageThumb() {
+    // if (!props.isEditing) { return; }
+    return (
+        <>
+          <tr>
+            <td>Image From Babepedia</td>
+            <td>
+              {EditableTextUtils.renderInputGroup({
+                value: photo_url, asURL: true, isEditing: !!props.isEditing, onChange: setPhotoUrl, placeholder: "Photo"
+              })}
+              <img className="performer" src={photo_url} width="50" height="85" />
+            </td>
+          </tr>
+        </>
+    )
+  }
+
   function maybeRenderButtons() {
     if (props.isEditing) {
       return (
@@ -395,6 +417,7 @@ export const PerformerDetailsPanel: FunctionComponent<IPerformerDetailsProps> = 
           {TableUtils.renderInputGroup(
             {title: "Instagram", value: instagram, asURL: true, urlPrefix: instagramPrefix, isEditing: !!props.isEditing, onChange: setInstagram})}
           {renderImageInput()}
+          {renderImageThumb()}
         </tbody>
       </HTMLTable>
 

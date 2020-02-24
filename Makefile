@@ -11,10 +11,10 @@ build:
 	$(SET) CGO_ENABLED=1 $(SEPARATOR) go build -mod=vendor -v -ldflags "-X 'github.com/stashapp/stash/pkg/api.buildstamp=$(DATE)' -X 'github.com/stashapp/stash/pkg/api.githash=$(GITHASH)'"
 
 install:
-	packr2 install
+	./packr2 install
 
 clean:
-	packr2 clean
+	./packr2 clean
 
 # Regenerates GraphQL files
 .PHONY: generate
@@ -49,4 +49,4 @@ it:
 .PHONY: ui
 ui:
 	cd ui/v2 && yarn build
-	packr2
+	./packr2

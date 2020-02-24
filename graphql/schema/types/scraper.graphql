@@ -28,6 +28,7 @@ type ScrapedScenePerformer {
   id: ID
   name: String!
   url: String
+  photo_url: String
   twitter: String
   instagram: String
   birthdate: String

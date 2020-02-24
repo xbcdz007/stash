@@ -2,6 +2,7 @@
 type ScrapedPerformer {
   name: String
   url: String
+  photo_url: String,
   twitter: String
   instagram: String
   birthdate: String
@@ -20,6 +21,7 @@ type ScrapedPerformer {
 input ScrapedPerformerInput {
   name: String
   url: String
+  photo_url: String,
   twitter: String
   instagram: String
   birthdate: String

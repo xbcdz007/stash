@@ -44,21 +44,26 @@ func GetFreeonesScraper() scraperConfig {
 func GetPerformerNames(c scraperTypeConfig, q string) ([]*models.ScrapedPerformer, error) {
 	// Request the HTML page.
 	queryURL := "https://www.freeones.com/suggestions.php?q=" + url.PathEscape(q) + "&t=1"
+
+	queryURL = "http://localhost:9998/?url=" + url.PathEscape(queryURL)
+
+	logger.Info("Call: " + queryURL)
 	res, err := http.Get(queryURL)
 	if err != nil {
+		logger.Info("Crossing -1")
 		logger.Fatal(err)
 	}
 	defer res.Body.Close()
 	if res.StatusCode != 200 {
 		return nil, fmt.Errorf("status code error: %d %s", res.StatusCode, res.Status)
 	}
-
+	logger.Info("Crossing 0")
 	// Load the HTML document
 	doc, err := goquery.NewDocumentFromReader(res.Body)
 	if err != nil {
 		return nil, err
 	}
-
+	logger.Info("Crossing 1")
 	// Find the performers
 	var performers []*models.ScrapedPerformer
 	doc.Find(".suggestion").Each(func(i int, s *goquery.Selection) {
@@ -68,7 +73,7 @@ func GetPerformerNames(c scraperTypeConfig, q string) ([]*models.ScrapedPerforme
 		}
 		performers = append(performers, &p)
 	})
-
+	logger.Debug("Crossing 2")
 	return performers, nil
 }
 
@@ -89,6 +94,9 @@ func GetPerformerURL(c scraperTypeConfig, href string) (*models.ScrapedPerformer
 }
 
 func getPerformerBio(c scraperTypeConfig, href string) (*models.ScrapedPerformer, error) {
+	//href = "http://localhost:9998/?url="+url.QueryEscape(href)
+	logger.Debug("Call Bio: " + href)
+
 	bioRes, err := http.Get(href)
 	if err != nil {
 		return nil, err
@@ -114,6 +122,9 @@ func getPerformerBio(c scraperTypeConfig, href string) (*models.ScrapedPerformer
 
 	name := paramValue(params, paramIndexes["name"])
 	result.Name = &name
+
+	photoUrl := "https://www.babepedia.com/pics/" + url.PathEscape(name) + ".jpg"
+	result.PhotoUrl = &photoUrl
 
 	ethnicity := getEthnicity(paramValue(params, paramIndexes["ethnicity"]))
 	result.Ethnicity = &ethnicity
@@ -188,6 +199,10 @@ func GetPerformer(c scraperTypeConfig, scrapedPerformer models.ScrapedPerformerI
 
 	performerName := *scrapedPerformer.Name
 	queryURL := "https://www.freeones.com/search/?t=1&q=" + url.PathEscape(performerName) + "&view=thumbs"
+
+	queryURL = "http://localhost:9998/?url=" + url.QueryEscape(queryURL)
+
+	logger.Info("Call: " + queryURL)
 	res, err := http.Get(queryURL)
 	if err != nil {
 		return nil, err
@@ -228,7 +243,7 @@ func GetPerformer(c scraperTypeConfig, scrapedPerformer models.ScrapedPerformerI
 
 	href = strings.Replace(href, matches[1], "bio_"+matches[1]+".php", -1)
 	href = "https://www.freeones.com" + href
-
+	href = "http://localhost:9998/?url=" + url.QueryEscape(href)
 	return getPerformerBio(c, href)
 }
 
@@ -278,7 +293,8 @@ func getEthnicity(ethnicity string) string {
 	case "Asian":
 		return "asian"
 	default:
-		panic("unknown ethnicity")
+		return "other"
+		//panic("unknown ethnicity")
 	}
 }
 

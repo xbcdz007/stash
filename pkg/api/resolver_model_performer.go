@@ -19,7 +19,12 @@ func (r *performerResolver) URL(ctx context.Context, obj *models.Performer) (*st
 	}
 	return nil, nil
 }
-
+func (r *performerResolver) PhotoURL(ctx context.Context, obj *models.Performer) (*string, error) {
+	if obj.PhotoUrl.Valid {
+		return &obj.PhotoUrl.String, nil
+	}
+	return nil, nil
+}
 func (r *performerResolver) Twitter(ctx context.Context, obj *models.Performer) (*string, error) {
 	if obj.Twitter.Valid {
 		return &obj.Twitter.String, nil
