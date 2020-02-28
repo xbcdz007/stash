@@ -107,7 +107,7 @@ export const SceneCard: FunctionComponent<ISceneCardProps> = (props: ISceneCardP
           <Link
             to={`/performers/${performer.id}`}
             className="performer-tag previewable image"
-            style={{backgroundImage: `url(${performer.image_path})`}}
+            style={{backgroundImage: `url(${performer.photo_url ? performer.photo_url : performer.image_path})`}}
           ></Link>
           <TagLink key={performer.id} performer={performer} />
         </div>

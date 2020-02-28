@@ -155,7 +155,8 @@ class SceneParserResult {
           id: p,
           name: "",
           favorite: false,
-          image_path: ""
+          image_path: "",
+          photo_url: ""
         };
       }));
     }
@@ -1123,4 +1124,3 @@ export const SceneFilenameParser: FunctionComponent<IProps> = (props: IProps) =>
     </Card>
   );
 };
-  

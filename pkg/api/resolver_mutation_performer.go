@@ -131,6 +131,9 @@ func (r *mutationResolver) PerformerUpdate(ctx context.Context, input models.Per
 	if input.URL != nil {
 		updatedPerformer.URL = sql.NullString{String: *input.URL, Valid: true}
 	}
+	if input.PhotoURL != nil {
+		updatedPerformer.PhotoUrl = sql.NullString{String: *input.PhotoURL, Valid: true}
+	}
 	if input.Birthdate != nil {
 		updatedPerformer.Birthdate = models.SQLiteDate{String: *input.Birthdate, Valid: true}
 	}

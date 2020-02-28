@@ -56,5 +56,6 @@ fragment SlimSceneData on Scene {
     name
     favorite
     image_path
+    photo_url
   }
 }
