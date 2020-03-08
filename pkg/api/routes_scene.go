@@ -43,21 +43,26 @@ func (rs sceneRoutes) Routes() chi.Router {
 
 func (rs sceneRoutes) Stream(w http.ResponseWriter, r *http.Request) {
 	scene := r.Context().Value(sceneKey).(*models.Scene)
-
+	logger.Info("Hit point Stream.mp4 1")
 	// detect if not a streamable file and try to transcode it instead
 	filepath := manager.GetInstance().Paths.Scene.GetStreamPath(scene.Path, scene.Checksum)
 	videoCodec := scene.VideoCodec.String
 	hasTranscode, _ := manager.HasTranscode(scene)
+	logger.Info("Hit point Stream.mp4 2, has valid codec = "+videoCodec, ffmpeg.IsValidCodec(videoCodec))
 	if ffmpeg.IsValidCodec(videoCodec) || hasTranscode {
+		logger.Info("FILE PATH: " + filepath)
 		manager.RegisterStream(filepath, &w)
 		http.ServeFile(w, r, filepath)
-		manager.WaitAndDeregisterStream(filepath, &w, r)
 
+		logger.Info("Hit point Stream.mp4 3")
+		manager.WaitAndDeregisterStream(filepath, &w, r)
+		logger.Info("Hit point Stream.mp4 4")
 		return
 	}
-
+	logger.Info("Hit point Stream.mp4 5")
 	// needs to be transcoded
 	videoFile, err := ffmpeg.NewVideoFile(manager.GetInstance().FFProbePath, scene.Path)
+	logger.Info("Hit point Stream.mp4 6")
 	if err != nil {
 		logger.Errorf("[stream] error reading video file: %s", err.Error())
 		return
